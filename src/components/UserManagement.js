@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import '../styles/UserManagement.css';
 import '../styles/RoleManagement.css';
-import RoleManagement from './RoleManagement';
-import { permissions } from '../utils/permissions';  // Import permissions file
+import RoleManagement from './RoleManagement';  
 
 const usersData = [
   { id: 1, name: 'Shivani', role: 'Admin', status: 'Active' },
   { id: 2, name: 'Rohini', role: 'Editor', status: 'Inactive' },
+  { id: 3, name: 'Kumari', role: 'Viewer', status: 'Inactive' },
+  { id: 4, name: 'Venkat', role: 'Editor', status: 'Inactive' },
 ];
+
+const permissions = {
+  Admin: ['Read', 'Write', 'Delete'],
+  Editor: ['Read', 'Write'],
+  Viewer: ['Read']
+};
 
 const UserManagement = () => {
   const [users, setUsers] = useState(usersData);
   const [searchQuery, setSearchQuery] = useState('');
+  const [editUserId, setEditUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
 
   // Handle user status toggle (Activate/Deactivate)
   const toggleStatus = (id) => {
@@ -21,16 +30,32 @@ const UserManagement = () => {
     setUsers(updatedUsers);
   };
 
-  // Handle user deletion
+  // Handle user deletion with confirmation
   const deleteUser = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+    const confirmation = window.confirm('Are you sure you want to delete this user?');
+    if (confirmation) {
+      const updatedUsers = users.filter((user) => user.id !== id);
+      setUsers(updatedUsers);
+    }
   };
 
-  // Handle user editing (simple modal or inline edit)
+  // Handle user editing (inline edit)
   const editUser = (id) => {
-    // Implement your edit logic, maybe a modal or form
-    console.log(`Edit user with ID: ${id}`);
+    setEditUserId(id);
+    const user = users.find((user) => user.id === id);
+    setEditedName(user.name);  // Set initial value for editing
+  };
+
+  const saveEdit = (id) => {
+    const updatedUsers = users.map((user) =>
+      user.id === id ? { ...user, name: editedName } : user
+    );
+    setUsers(updatedUsers);
+    setEditUserId(null);  // Close the editing mode
+  };
+
+  const cancelEdit = () => {
+    setEditUserId(null);  // Close the editing mode without saving
   };
 
   // Handle role change
@@ -63,21 +88,40 @@ const UserManagement = () => {
             <th>Role</th>
             <th>Status</th>
             <th>Actions</th>
-            <th>Permissions</th>
+            <th>Permissions</th> {/* New Permissions column */}
           </tr>
         </thead>
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td>{user.name}</td>
+              <td>
+                {editUserId === user.id ? (
+                  <input
+                    type="text"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                  />
+                ) : (
+                  user.name
+                )}
+              </td>
               <td>{user.role}</td>
               <td>{user.status}</td>
               <td>
-                <button onClick={() => editUser(user.id)}>Edit</button>
-                <button onClick={() => deleteUser(user.id)}>Delete</button>
-                <button onClick={() => toggleStatus(user.id)}>
-                  {user.status === 'Active' ? 'Deactivate' : 'Activate'}
-                </button>
+                {editUserId === user.id ? (
+                  <>
+                    <button onClick={() => saveEdit(user.id)}>Save</button>
+                    <button onClick={cancelEdit}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => editUser(user.id)}>Edit</button>
+                    <button onClick={() => deleteUser(user.id)}>Delete</button>
+                    <button onClick={() => toggleStatus(user.id)}>
+                      {user.status === 'Active' ? 'Deactivate' : 'Activate'}
+                    </button>
+                  </>
+                )}
                 <RoleManagement user={user} onRoleChange={handleRoleChange} />
               </td>
               <td>
@@ -96,4 +140,3 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
-
