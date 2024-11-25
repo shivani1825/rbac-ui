@@ -26,3 +26,4 @@ const RoleManagement = ({ user, onRoleChange }) => {
 };
 
 export default RoleManagement;
+

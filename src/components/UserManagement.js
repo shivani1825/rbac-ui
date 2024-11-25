@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import '../styles/UserManagement.css';
-import RoleManagement from './components/RoleManagement'; // Ensure the correct path
 import '../styles/RoleManagement.css';
+import RoleManagement from './RoleManagement';
+import { permissions } from '../utils/permissions';  // Import permissions file
 
-// Sample data for users
 const usersData = [
-  { id: 1, name: 'John Doe', role: 'Admin', status: 'Active' },
-  { id: 2, name: 'Jane Smith', role: 'Editor', status: 'Inactive' },
+  { id: 1, name: 'Shivani', role: 'Admin', status: 'Active' },
+  { id: 2, name: 'Rohini', role: 'Editor', status: 'Inactive' },
 ];
 
 const UserManagement = () => {
@@ -63,6 +63,7 @@ const UserManagement = () => {
             <th>Role</th>
             <th>Status</th>
             <th>Actions</th>
+            <th>Permissions</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +80,13 @@ const UserManagement = () => {
                 </button>
                 <RoleManagement user={user} onRoleChange={handleRoleChange} />
               </td>
+              <td>
+                <ul>
+                  {permissions[user.role].map((permission, index) => (
+                    <li key={index}>{permission}</li>
+                  ))}
+                </ul>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -88,3 +96,4 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+
