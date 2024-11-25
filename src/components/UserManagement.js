@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-//import '../styles/UserManagement.css';
 import '../styles/UserManagement.css';
-
-import './UserManagement.css'; // Make sure to import the CSS file for styling
-
 // Sample data for users
 const usersData = [
   { id: 1, name: 'John Doe', role: 'Admin', status: 'Active' },
