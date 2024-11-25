@@ -1,18 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Users from "./pages/Users";
-import Roles from "./pages/Roles";
+import React from 'react';
+import UserManagement from './components/UserManagement'; // Import UserManagement
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Users />} />
-        <Route path="/roles" element={<Roles />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <UserManagement /> {/* Render UserManagement component */}
+    </div>
   );
-};
+}
 
 export default App;
+
 

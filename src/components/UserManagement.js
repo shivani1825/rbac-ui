@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import EditUserModal from './EditUserModal';  // Import the EditUserModal
+//import '../styles/UserManagement.css';
+import '../styles/UserManagement.css';
 
+import './UserManagement.css'; // Make sure to import the CSS file for styling
+
+// Sample data for users
 const usersData = [
   { id: 1, name: 'John Doe', role: 'Admin', status: 'Active' },
   { id: 2, name: 'Jane Smith', role: 'Editor', status: 'Inactive' },
@@ -9,9 +13,8 @@ const usersData = [
 const UserManagement = () => {
   const [users, setUsers] = useState(usersData);
   const [searchQuery, setSearchQuery] = useState('');
-  const [editingUser, setEditingUser] = useState(null);  // Track which user is being edited
 
-  // Handle user status toggle
+  // Handle user status toggle (Activate/Deactivate)
   const toggleStatus = (id) => {
     const updatedUsers = users.map((user) =>
       user.id === id ? { ...user, status: user.status === 'Active' ? 'Inactive' : 'Active' } : user
@@ -25,18 +28,10 @@ const UserManagement = () => {
     setUsers(updatedUsers);
   };
 
-  // Handle user editing (open modal)
+  // Handle user editing (simple modal or inline edit)
   const editUser = (id) => {
-    const user = users.find(user => user.id === id);
-    setEditingUser(user);
-  };
-
-  // Save the updated user
-  const saveUserChanges = (id, updatedData) => {
-    const updatedUsers = users.map((user) =>
-      user.id === id ? { ...user, ...updatedData } : user
-    );
-    setUsers(updatedUsers);
+    // Implement your edit logic, maybe a modal or form
+    console.log(`Edit user with ID: ${id}`);
   };
 
   // Filter users based on search query
@@ -46,7 +41,7 @@ const UserManagement = () => {
   );
 
   return (
-    <div>
+    <div className="user-management">
       <h2>User Management</h2>
       <input
         type="text"
@@ -80,15 +75,6 @@ const UserManagement = () => {
           ))}
         </tbody>
       </table>
-
-      {/* Show modal for editing user */}
-      {editingUser && (
-        <EditUserModal
-          user={editingUser}
-          onSave={saveUserChanges}
-          onClose={() => setEditingUser(null)}  // Close modal
-        />
-      )}
     </div>
   );
 };
