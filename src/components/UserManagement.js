@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/UserManagement.css';
+import RoleManagement from './components/RoleManagement'; // Ensure the correct path
+import '../styles/RoleManagement.css';
+
 // Sample data for users
 const usersData = [
   { id: 1, name: 'John Doe', role: 'Admin', status: 'Active' },
@@ -28,6 +31,14 @@ const UserManagement = () => {
   const editUser = (id) => {
     // Implement your edit logic, maybe a modal or form
     console.log(`Edit user with ID: ${id}`);
+  };
+
+  // Handle role change
+  const handleRoleChange = (userId, newRole) => {
+    const updatedUsers = users.map((user) =>
+      user.id === userId ? { ...user, role: newRole } : user
+    );
+    setUsers(updatedUsers);
   };
 
   // Filter users based on search query
@@ -66,6 +77,7 @@ const UserManagement = () => {
                 <button onClick={() => toggleStatus(user.id)}>
                   {user.status === 'Active' ? 'Deactivate' : 'Activate'}
                 </button>
+                <RoleManagement user={user} onRoleChange={handleRoleChange} />
               </td>
             </tr>
           ))}

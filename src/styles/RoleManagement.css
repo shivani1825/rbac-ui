@@ -1,0 +1,21 @@
+.role-management {
+    margin: 10px;
+  }
+  
+  .role-management select {
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .permissions-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .permissions-list li {
+    background-color: #f4f4f4;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
