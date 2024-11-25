@@ -1,15 +1,20 @@
 /* src/styles/UserManagement.css */
 
+/* src/styles/UserManagement.css */
+
+/* Main container for user management */
 .user-management {
     padding: 20px;
     font-family: Arial, sans-serif;
   }
   
+  /* Heading */
   .user-management h2 {
     text-align: center;
     margin-bottom: 20px;
   }
   
+  /* Search input */
   input[type='text'] {
     padding: 10px;
     margin-bottom: 20px;
@@ -22,6 +27,7 @@
     border: 1px solid #ccc;
   }
   
+  /* Table styles */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -45,6 +51,7 @@
     background-color: #f9f9f9;
   }
   
+  /* Button styles */
   button {
     padding: 5px 10px;
     margin-right: 15px;
@@ -52,17 +59,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
   
-  ul li {
-    background-color: #f9f9f9;
-    padding: 5px;
-    border-radius: 3px;
-    margin: 5px 0;
-  }
   button:hover {
     opacity: 0.8;
   }
@@ -86,7 +83,20 @@
     color: white;
   }
   
-  /* Optional: Add some styles for the role dropdown */
+  /* List styling for permissions */
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  ul li {
+    background-color: #f9f9f9;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 5px 0;
+  }
+  
+  /* Styling for role dropdown inside RoleManagement component */
   .role-management select {
     padding: 5px 10px;
     border-radius: 5px;
@@ -97,6 +107,60 @@
   .role-management select:focus {
     outline: none;
     border-color: #007bff;
+  }
+  
+  /* Modal styling */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensures the modal is above other content */
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px; /* Adjust width as needed */
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for a nicer look */
+  }
+  
+  .modal-content input,
+  .modal-content select {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modal-content button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .modal-content button:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-content button:nth-child(2) {
+    background-color: #f44336; /* Cancel button */
+  }
+  
+  .modal-content button:nth-child(2):hover {
+    background-color: #d32f2f; /* Hover effect for cancel button */
   }
   
   /* Responsive Design */

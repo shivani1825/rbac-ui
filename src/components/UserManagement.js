@@ -1,7 +1,8 @@
+/// src/components/UserManagement.js
 import React, { useState } from 'react';
 import '../styles/UserManagement.css';
 import '../styles/RoleManagement.css';
-import RoleManagement from './RoleManagement';  
+import RoleManagement from './RoleManagement';
 
 const usersData = [
   { id: 1, name: 'Shivani', role: 'Admin', status: 'Active' },
@@ -21,6 +22,9 @@ const UserManagement = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [editUserId, setEditUserId] = useState(null);
   const [editedName, setEditedName] = useState('');
+  const [newUserName, setNewUserName] = useState('');
+  const [newUserRole, setNewUserRole] = useState('Admin');
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
 
   // Handle user status toggle (Activate/Deactivate)
   const toggleStatus = (id) => {
@@ -66,6 +70,24 @@ const UserManagement = () => {
     setUsers(updatedUsers);
   };
 
+  // Handle add user form submission
+  const addUser = () => {
+    if (newUserName) {
+      const newUser = {
+        id: users.length + 1, // New user ID
+        name: newUserName,
+        role: newUserRole,
+        status: 'Active', // New users are active by default
+      };
+      setUsers([...users, newUser]);
+      setShowAddUserModal(false); // Close the modal
+      setNewUserName(''); // Reset input fields
+      setNewUserRole('Admin');
+    } else {
+      alert('Please enter a name for the new user.');
+    }
+  };
+
   // Filter users based on search query
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -81,6 +103,36 @@ const UserManagement = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      
+      {/* Add User Button */}
+      <button onClick={() => setShowAddUserModal(true)}>Add User</button>
+
+      {/* Add User Modal */}
+      {showAddUserModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Add New User</h3>
+            <input
+              type="text"
+              placeholder="Enter user name"
+              value={newUserName}
+              onChange={(e) => setNewUserName(e.target.value)}
+            />
+            <select
+              value={newUserRole}
+              onChange={(e) => setNewUserRole(e.target.value)}
+            >
+              <option value="Admin">Admin</option>
+              <option value="Editor">Editor</option>
+              <option value="Viewer">Viewer</option>
+            </select>
+            <button onClick={addUser}>Add User</button>
+            <button onClick={() => setShowAddUserModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {/* Users Table */}
       <table>
         <thead>
           <tr>
@@ -88,7 +140,7 @@ const UserManagement = () => {
             <th>Role</th>
             <th>Status</th>
             <th>Actions</th>
-            <th>Permissions</th> {/* New Permissions column */}
+            <th>Permissions</th>
           </tr>
         </thead>
         <tbody>
