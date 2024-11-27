@@ -1,3 +1,13 @@
+"homepage": "https://shivani1825.github.io/rbac-ui"
+
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
+
+
 {
   "name": "rbac-ui",
   "version": "0.1.0",
@@ -38,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.2.0"
   }
 }
